@@ -24,9 +24,9 @@ Proyecto de **Inteligencia Artificial en Dispositivos Móviles y Embebidos**: un
 | `Lista_de_compras.md` | Materiales, precios aproximados, montaje y conexiones |
 
 ## Hardware
-Raspberry Pi 4 (o 5), Raspberry Pi Camera Module v2/v3, 2 servos SG90, driver PCA9685 (I2C), fuente de 5 V aparte para los servos y tornillería M2/M3. Detalle en [Lista_de_compras.md](Lista_de_compras.md).
+Raspberry Pi 4 o 5 (prestada por la universidad), cámara OV5647 de 5 MP (compatible con la Pi Camera v1.3/v2), 2 servos SG90, driver PCA9685 (I2C), módulo de carga o fuente de 5 V aparte para los servos y tornillería M2/M3. Costo aproximado sin la Pi: 75.000 – 115.000 COP más la alimentación. Detalle en [Lista_de_compras.md](Lista_de_compras.md).
 
-**Conexión PCA9685 → Pi:** VCC → 3.3 V (pin 1), GND → pin 6, SDA → GPIO2 (pin 3), SCL → GPIO3 (pin 5). Servo pan al canal 0 y tilt al canal 1. La fuente de 5 V va a la bornera V+, con la tierra común con la Pi.
+**Conexión PCA9685 → Pi:** VCC → 3.3 V (pin 1), GND → pin 6, SDA → GPIO2 (pin 3), SCL → GPIO3 (pin 5). Servo pan al canal 0 y tilt al canal 1. Los 5 V del módulo de carga van a la bornera V+, con la tierra común con la Pi.
 
 ## Uso
 ```bash

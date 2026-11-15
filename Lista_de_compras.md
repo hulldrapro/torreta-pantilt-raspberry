@@ -3,21 +3,49 @@
 Proyecto de IA en embebidos: una torreta tipo CIWS que detecta formas con la cámara y sigue la forma correcta moviendo 2 servos.
 Diseño: "Pan-Tilt Camera Turret for 9g Servos (SG90)" (Base, Fork y Head) + adaptador de cámara hecho por Claude.
 
-Los precios son **aproximados** (Colombia, tiendas de electrónica o MercadoLibre, noviembre de 2026). Confírmalos en la tienda.
+Los precios son **aproximados** (Colombia, tiendas de electrónica o MercadoLibre, noviembre de 2026) y no se confirmaron en una tienda. Confírmalos antes de comprar.
 
-## Lo esencial
+## Lo esencial (versión económica)
+
+La **Raspberry Pi la presta la universidad**, así que no se compra. Pide con ella su fuente USB-C y, si se puede, la microSD.
 
 | # | Qué | Cant. | Para qué | Precio aprox. (COP) |
 |---|-----|-------|----------|---------------------|
-| 1 | Raspberry Pi 4 Model B de 4 GB (o una Pi 5) | 1 | El cerebro: corre OpenCV y controla los servos | 250.000 – 350.000 (si la universidad no la presta) |
-| 2 | Tarjeta microSD de 32 GB, clase 10 / A1 | 1 | Sistema operativo (Raspberry Pi OS) | 20.000 – 35.000 |
-| 3 | Fuente USB-C de 5 V y 3 A (Pi 4) o de 5 V y 5 A (Pi 5) | 1 | Alimentar la Raspberry | 30.000 – 60.000 |
-| 4 | Cámara Raspberry Pi Camera Module v2 (8 MP) o Module 3 | 1 | Ver las formas. El adaptador impreso está hecho para sus agujeros (21 × 12.5 mm, M2) | 80.000 – 150.000 |
-| 5 | **Solo si es Pi 5:** cable de cámara de 22 a 15 pines (200 a 300 mm) | 1 | La Pi 5 usa un conector más pequeño | 10.000 – 20.000 |
-| 6 | Servo SG90 de 9 g (o MG90S, que mide lo mismo y tiene engranajes metálicos) | 3 | 2 para la torreta (giro e inclinación) y 1 de repuesto | 8.000 – 15.000 c/u |
-| 7 | Módulo PCA9685 (driver de 16 servos, I2C) | 1 | Genera un PWM estable. Con el PWM por software de la Pi, los servos tiemblan | 15.000 – 25.000 |
-| 8 | Fuente aparte de 5 V y 2–3 A para los servos (adaptador con jack DC y bornera) | 1 | Los servos no se alimentan desde la Pi. Hay que unir las tierras (GND) | 15.000 – 30.000 |
-| 9 | Cables dupont hembra-hembra y macho-hembra (kit de 40) | 1 | Conexiones Pi ↔ PCA9685 | 8.000 – 12.000 |
+| 1 | Raspberry Pi 4 o 5 | 1 | El cerebro: corre OpenCV y controla los servos | **0 (prestada)** |
+| 2 | Tarjeta microSD de 32 GB, A1 (de cualquier marca conocida) | 1 | Sistema operativo. Si te prestan una o ya tienes, 0 | 15.000 – 22.000 |
+| 3 | Cámara **OV5647 de 5 MP** (compatible con la Pi Camera v1.3, con su cable plano) | 1 | Ver las formas. Tiene los mismos agujeros M2 que la v2 (21 × 12.5 mm), así que el adaptador impreso sirve. Para OpenCV a 640×480 alcanza de sobra | 25.000 – 40.000 |
+| 4 | **Solo si es Pi 5:** cable de cámara de 22 a 15 pines (200 mm) | 1 | La Pi 5 usa un conector más pequeño | 8.000 – 15.000 |
+| 5 | Servo SG90 de 9 g | 2 | Giro (pan) e inclinación (tilt). El repuesto es opcional | 7.000 – 10.000 c/u |
+| 6 | Módulo PCA9685 (16 canales, I2C) | 1 | PWM estable para los servos; el programa `seguidor_formas.py` lo usa | 15.000 – 22.000 |
+| 7 | Cables dupont hembra-hembra (tira de 20) | 1 | Conexiones Pi ↔ PCA9685 | 4.000 – 6.000 |
+| 8 | Módulo de carga / alimentación (ver la sección siguiente) | 1 | Alimentar servos (y la Pi si se quiere portátil) | 0 – 60.000 |
+
+**Total aproximado sin el módulo de carga: 75.000 – 115.000 COP** (antes era de 450.000 a 700.000 contando la Raspberry y la Pi Camera v2).
+
+Ahorros frente a la lista anterior:
+- La Raspberry se pide prestada (ahorra 250.000 – 350.000).
+- La cámara OV5647 en lugar de la Pi Camera v2/v3 (ahorra 50.000 – 110.000). Una webcam USB que ya tengas también sirve, pero el adaptador impreso está hecho para la cámara de Raspberry y en el programa habría que cambiar `picamera2` por `cv2.VideoCapture(0)`.
+- 2 servos en lugar de 3 y una sola tira de cables.
+- La fuente de 5 V aparte para los servos se reemplaza por el módulo de carga.
+
+## Módulo de carga (alimentación)
+
+Los servos **no** se alimentan de la Pi: necesitan 5 V aparte, con la tierra (GND) unida a la de la Pi. Opciones de la más barata a la más completa:
+
+| Opción | Qué comprar | Para qué sirve | Precio aprox. (COP) |
+|---|---|---|---|
+| **A. Cargador de celular que ya tengas** | Nada: un cargador USB de 5 V y 2 A + un cable USB viejo pelado a la bornera V+ del PCA9685 | Torreta en la mesa, conectada a la pared. La Pi va con su fuente prestada | **0 – 5.000** |
+| **B. Power bank (recomendada si quieres que sea portátil)** | Power bank de 10.000 mAh con **2 salidas** y al menos 2.4 A (mejor con USB-C PD de 3 A) | Una salida a la Pi y otra a los servos. Se carga con cualquier cargador. Es la opción portátil más segura: ya trae la protección y el circuito de carga | 40.000 – 70.000 (0 si ya tienes una) |
+| **C. Batería armada con 18650 (2S)** | 2 celdas 18650 (de marca, no "9900 mAh") + porta pilas 2S + BMS 2S de 5–10 A + convertidor reductor **XL4015 o LM2596** ajustado a 5.1 V + cargador 2S de 8.4 V (o módulo de carga 2S USB-C) | Da más corriente (3–5 A) para la Pi 4 y los servos juntos; sirve para explicar en el informe el sistema de energía | 50.000 – 75.000 en total |
+| **D. Módulo 1S tipo power bank** | 1–2 celdas 18650 en paralelo + módulo de carga y elevador **IP5306** (5 V, 2.1 A) | Barato y pequeño, pero 2.1 A queda justo: alcanza para los servos o para una Pi 4 sin cámara funcionando a tope, no para las dos cosas | 20.000 – 35.000 |
+| E. UPS HAT para Raspberry (Waveshare, Geekworm X728/X1201) | El HAT + celdas 18650 | Muy cómodo, pero caro y hay que importarlo | 100.000 – 380.000 |
+
+**Recomendación:** si la torreta se presenta en la mesa, opción **A** (gratis). Si debe ser portátil, opción **B** con un power bank de 2 salidas. La **C** solo si el profesor pide diseñar la alimentación.
+
+Cuidados:
+- **No uses TP4056 + MT3608** para la Pi: el MT3608 no entrega los 3 A que pide la Pi 4 y se reinicia.
+- Pon un condensador de 470–1000 µF entre V+ y GND del PCA9685 para que los servos no hagan caer el voltaje al arrancar.
+- Con 18650 sueltas, usa siempre el BMS y no cargues las celdas sin vigilancia.
 
 ## Tornillería (para el adaptador de la cámara)
 
@@ -48,7 +76,7 @@ Sugerencia: un kit de separadores de nylon M2/M2.5/M3 (unos 20.000 COP) trae cas
 1. **Servo de giro (pan):** va boca abajo dentro del bolsillo de abajo del Fork, atornillado por las orejas. Su cuerno largo se pega en la ranura del centro de la Base.
 2. **Servo de inclinación (tilt):** va dentro del Head, con el eje hacia el brazo grueso del Fork. Su cuerno largo se encaja en la ranura del brazo. Al otro lado, el pivote del Head entra en el agujero del brazo delgado.
 3. **Cámara:** adaptador al frente del Head con 4 M3, y la cámara sobre el adaptador con 4 M2 y separadores de 3 mm.
-4. **Conexiones:** PCA9685 a la Pi por I2C (SDA = GPIO2 / pin 3, SCL = GPIO3 / pin 5, VCC = 3.3 V / pin 1, GND = pin 6). Los servos van a los canales 0 y 1. La fuente de 5 V de los servos va a la bornera V+ del PCA9685, y las tierras quedan unidas.
+4. **Conexiones:** PCA9685 a la Pi por I2C (SDA = GPIO2 / pin 3, SCL = GPIO3 / pin 5, VCC = 3.3 V / pin 1, GND = pin 6). Los servos van a los canales 0 y 1. Los 5 V del módulo de carga van a la bornera V+ del PCA9685, y las tierras quedan unidas.
 
 **Antes de pegar los cuernos**, centra los servos en 90°. Así la torreta arranca mirando al frente.
 
