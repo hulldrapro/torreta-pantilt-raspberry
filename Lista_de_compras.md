@@ -22,6 +22,22 @@ La **Raspberry Pi la presta la universidad**, así que no se compra. Pide con el
 
 **Total aproximado sin el módulo de carga: 75.000 – 115.000 COP** (antes era de 450.000 a 700.000 contando la Raspberry y la Pi Camera v2).
 
+### Lo que se agrega para la versión con IA (Miniproyecto 3)
+
+La rúbrica pide **mínimo 3 actuadores** (los LEDs no cuentan), **un botón que haga todo el ciclo** y **una acción por clase**:
+
+| # | Qué | Cant. | Para qué | Precio aprox. (COP) |
+|---|-----|-------|----------|---------------------|
+| 9 | Servo SG90 adicional | 1 | **Gatillo** (3.er actuador): va pegado al costado del Head y mueve un brazo o bandera de "disparo". PCA9685 canal 2 | 7.000 – 10.000 |
+| 10 | Módulo **buzzer pasivo** KY-006 (pasivo, no activo: tiene que poder hacer tonos distintos) | 1 | 4.º actuador: un sonido distinto por clase. GPIO18 | 3.000 – 5.000 |
+| 11 | Pulsador grande (tipo arcade de 24–30 mm o pulsador de panel) | 1 | Botón de inicio del ciclo. GPIO17 | 3.000 – 8.000 |
+| 12 | LED RGB de cátodo común (5 mm) + 3 resistencias de 220 Ω | 1 | Indicador complementario del estado y de la clase | 1.500 – 3.000 |
+| 13 | Protoboard pequeña (400 puntos) | 1 | Botón, buzzer y LED | 5.000 – 8.000 |
+| 14 | Condensador electrolítico de 1000 µF / 16 V | 1 | Entre V+ y GND del PCA9685: 3 servos arrancando a la vez hacen caer el voltaje | 1.000 – 2.000 |
+| 15 | Cartón paja o icopor blanco de ~50 × 70 cm | 1 | Tablero donde se pegan las figuras impresas en la demostración | 3.000 – 6.000 |
+
+**Adicional para la versión con IA: 23.500 – 42.000 COP.**
+
 Ahorros frente a la lista anterior:
 - La Raspberry se pide prestada (ahorra 250.000 – 350.000).
 - La cámara OV5647 en lugar de la Pi Camera v2/v3 (ahorra 50.000 – 110.000). Una webcam USB que ya tengas también sirve, pero el adaptador impreso está hecho para la cámara de Raspberry y en el programa habría que cambiar `picamera2` por `cv2.VideoCapture(0)`.
